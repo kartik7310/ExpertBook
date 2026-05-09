@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Expert {
+  id           String    @id @default(cuid())
+  name         String
+  category     String
+  experience   Int
+  rating       Float
+  profilePic   String
+  about        String
+  slots        Slot[]
+  bookings     Booking[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Slot {
+  id          Int      @id @default(autoincrement())
+  expertId    String
+  expert      Expert   @relation(fields: [expertId], references: [id], onDelete: Cascade)
+  date        String   // YYYY-MM-DD
+  timeSlot    String   // HH:mm
+  isAvailable Boolean  @default(true)
+
+  @@index([expertId, date])
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  expertId  String
+  expert    Expert   @relation(fields: [expertId], references: [id])
+  name      String
+  email     String
+  phone     String
+  date      String
+  timeSlot  String
+  notes     String?
+  status    BookingStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([expertId, date, timeSlot])
+  @@index([email])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+}
