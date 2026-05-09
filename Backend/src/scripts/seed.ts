@@ -85,7 +85,7 @@ const seedDB = async () => {
     console.log('Seeding experts and slots...');
     for (const expertData of experts) {
       const { availableSlots, ...expertInfo } = expertData;
-      
+
       const expert = await prisma.expert.create({
         data: expertInfo
       });
