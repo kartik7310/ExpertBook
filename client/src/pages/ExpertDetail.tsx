@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Calendar, Clock, Loader2, Star, Award, MapPin, CheckCircle2 } from 'lucide-react';
 import { expertService } from '../services/api';
 import type { Expert } from '../types';
@@ -10,11 +10,11 @@ const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000');
 
 const ExpertDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+
   const [expert, setExpert] = useState<Expert | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -56,7 +56,7 @@ const ExpertDetail: React.FC = () => {
             })
           };
         });
-        
+
         // If the user had this slot selected, clear it
         if (selectedDate === data.date && selectedSlot === data.timeSlot) {
           setSelectedSlot(null);
@@ -87,11 +87,11 @@ const ExpertDetail: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Profile Header */}
-      <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row gap-8 items-start">
+      <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start text-center md:text-left">
         <div className="w-32 h-32 md:w-48 md:h-48 rounded-2xl overflow-hidden shrink-0 shadow-inner">
           <img src={expert.profilePic} alt={expert.name} className="w-full h-full object-cover" />
         </div>
-        
+
         <div className="flex-grow space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -103,7 +103,7 @@ const ExpertDetail: React.FC = () => {
               <span className="font-bold">{expert.rating} Rating</span>
             </div>
           </div>
-          
+
           <div className="flex flex-wrap gap-4 text-gray-500 text-sm">
             <div className="flex items-center gap-1">
               <Award className="w-4 h-4" />
@@ -118,7 +118,7 @@ const ExpertDetail: React.FC = () => {
               Verified Expert
             </div>
           </div>
-          
+
           <p className="text-gray-600 leading-relaxed max-w-3xl">
             {expert.about}
           </p>
@@ -137,11 +137,10 @@ const ExpertDetail: React.FC = () => {
               <button
                 key={day.date}
                 onClick={() => { setSelectedDate(day.date); setSelectedSlot(null); }}
-                className={`p-4 rounded-2xl border text-left transition-all ${
-                  selectedDate === day.date
+                className={`p-4 rounded-2xl border text-left transition-all ${selectedDate === day.date
                     ? 'border-primary-600 bg-primary-50 ring-2 ring-primary-100'
                     : 'border-gray-100 hover:border-primary-300 bg-white'
-                }`}
+                  }`}
               >
                 <div className="font-bold">{new Date(day.date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</div>
                 <div className="text-xs text-gray-500">{day.slots.length} slots available</div>
@@ -156,7 +155,7 @@ const ExpertDetail: React.FC = () => {
             <Clock className="w-5 h-5 text-primary-600" />
             Available Time Slots
           </h2>
-          
+
           {selectedDate ? (
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
               {activeDaySlots.length > 0 ? (
@@ -165,11 +164,10 @@ const ExpertDetail: React.FC = () => {
                     <button
                       key={slot}
                       onClick={() => setSelectedSlot(slot)}
-                      className={`py-3 px-4 rounded-xl font-semibold border transition-all ${
-                        selectedSlot === slot
+                      className={`py-3 px-4 rounded-xl font-semibold border transition-all ${selectedSlot === slot
                           ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-200'
                           : 'bg-white text-gray-700 border-gray-200 hover:border-primary-400'
-                      }`}
+                        }`}
                     >
                       {slot}
                     </button>
@@ -189,7 +187,7 @@ const ExpertDetail: React.FC = () => {
                       {new Date(selectedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at {selectedSlot}
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={() => setShowBookingForm(true)}
                     className="w-full md:w-auto px-10 py-4 bg-primary-600 text-white rounded-2xl font-bold hover:bg-primary-700 transition-all shadow-lg shadow-primary-200"
                   >
@@ -207,7 +205,7 @@ const ExpertDetail: React.FC = () => {
       </div>
 
       {showBookingForm && expert && selectedDate && selectedSlot && (
-        <BookingForm 
+        <BookingForm
           expert={expert}
           date={selectedDate}
           slot={selectedSlot}

@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, type JSX } from 'react';
 import { Search, Calendar, Clock, User, CheckCircle2, AlertCircle, Clock3, Loader2 } from 'lucide-react';
 import { bookingService } from '../services/api';
 import type { Booking } from '../types';
 
-const statusStyles = {
-  Pending: 'bg-yellow-50 text-yellow-700 border-yellow-100',
-  Confirmed: 'bg-green-50 text-green-700 border-green-100',
-  Completed: 'bg-blue-50 text-blue-700 border-blue-100',
+const statusStyles: Record<string, string> = {
+  PENDING: 'bg-yellow-50 text-yellow-700 border-yellow-100',
+  CONFIRMED: 'bg-green-50 text-green-700 border-green-100',
+  COMPLETED: 'bg-blue-50 text-blue-700 border-blue-100',
 };
 
-const statusIcons = {
-  Pending: <Clock3 className="w-4 h-4" />,
-  Confirmed: <CheckCircle2 className="w-4 h-4" />,
-  Completed: <CheckCircle2 className="w-4 h-4" />,
+const statusIcons: Record<string, JSX.Element> = {
+  PENDING: <Clock3 className="w-4 h-4" />,
+  CONFIRMED: <CheckCircle2 className="w-4 h-4" />,
+  COMPLETED: <CheckCircle2 className="w-4 h-4" />,
 };
 
 const MyBookings: React.FC = () => {
@@ -47,13 +47,13 @@ const MyBookings: React.FC = () => {
       </div>
 
       {/* Search Bar */}
-      <form onSubmit={fetchBookings} className="flex flex-col md:flex-row gap-4">
+      <form onSubmit={fetchBookings} className="flex flex-col md:flex-row gap-3 md:gap-4">
         <div className="relative flex-grow">
           <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="email"
             placeholder="Enter your booking email..."
-            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-200 outline-none focus:ring-4 focus:ring-primary-50 transition-all"
+            className="w-full pl-12 pr-4 py-3.5 md:py-4 rounded-2xl border border-gray-200 outline-none focus:ring-4 focus:ring-primary-50 transition-all text-sm md:text-base"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -62,7 +62,7 @@ const MyBookings: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="px-8 py-4 bg-primary-600 text-white rounded-2xl font-bold hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-100 disabled:opacity-50"
+          className="px-8 py-3.5 md:py-4 bg-primary-600 text-white rounded-2xl font-bold hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-100 disabled:opacity-50 text-sm md:text-base"
         >
           {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
           View Bookings
@@ -90,7 +90,7 @@ const MyBookings: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {bookings.map((booking) => (
-            <div 
+            <div
               key={booking.id}
               className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center justify-between gap-6"
             >
@@ -100,7 +100,7 @@ const MyBookings: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">
-                    Session with {(booking.expertId as any).name}
+                    Session with {booking.expert?.name || 'Expert'}
                   </h4>
                   <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
                     <div className="flex items-center gap-1 text-sm text-gray-500">

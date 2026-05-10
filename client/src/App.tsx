@@ -5,16 +5,16 @@ import MyBookings from './pages/MyBookings';
 
 const Navbar = () => (
   <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
-    <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
-      <Link to="/" className="text-2xl font-bold text-primary-600 flex items-center gap-2">
-        <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+    <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-4 md:px-6">
+      <Link to="/" className="text-xl md:text-2xl font-bold text-primary-600 flex items-center gap-2">
+        <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center shrink-0">
           <div className="w-4 h-4 bg-white rounded-sm rotate-45" />
         </div>
-        ExpertBook
+        <span className="hidden xs:inline">ExpertBook</span>
       </Link>
-      <div className="flex gap-8">
-        <Link to="/" className="text-gray-600 hover:text-primary-600 font-semibold transition-colors">Find Experts</Link>
-        <Link to="/my-bookings" className="text-gray-600 hover:text-primary-600 font-semibold transition-colors">My Bookings</Link>
+      <div className="flex gap-4 md:gap-8">
+        <Link to="/" className="text-sm md:text-base text-gray-600 hover:text-primary-600 font-semibold transition-colors">Find Experts</Link>
+        <Link to="/my-bookings" className="text-sm md:text-base text-gray-600 hover:text-primary-600 font-semibold transition-colors">My Bookings</Link>
       </div>
     </div>
   </nav>

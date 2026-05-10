@@ -13,15 +13,19 @@ export interface Expert {
 }
 
 export interface Booking {
-  _id: string;
-  expertId: string | Expert;
+  id: string;
+  expertId: string;
+  expert?: {
+    name: string;
+    category: string;
+  };
   name: string;
   email: string;
   phone: string;
   date: string;
   timeSlot: string;
   notes?: string;
-  status: 'Pending' | 'Confirmed' | 'Completed';
+  status: 'PENDING' | 'CONFIRMED' | 'COMPLETED';
   createdAt: string;
 }
 
