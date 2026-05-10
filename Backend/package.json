@@ -7,9 +7,9 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "seed": "ts-node src/scripts/seed.ts",
     "testload": "ts-node src/scripts/loadTest.ts",
-    "build": "prisma generate  && tsc",
+    "build": "npx prisma generate && tsc",
     "start": "node dist/server.js",
-    "postinstall": "prisma generate"
+    "postinstall": "npx prisma generate"
   },
   "keywords": [],
   "author": "",
