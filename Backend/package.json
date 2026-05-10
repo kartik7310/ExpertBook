@@ -7,8 +7,9 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "seed": "ts-node src/scripts/seed.ts",
     "testload": "ts-node src/scripts/loadTest.ts",
-    "build": "rimraf dist && tsc",
-    "start": "node dist/server.js"
+    "build": "prisma generate && rimraf dist && tsc",
+    "start": "node dist/server.js",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
